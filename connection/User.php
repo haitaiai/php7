@@ -95,23 +95,9 @@ class User {
         ));
 
         if (count($results) > 0) {
-            $row = $results[0];
-            $this->setIdUsuario($row['idusuario']);
-            $this->setDesEmail($row['desemail']);
-            $this->setDesLogin($row['deslogin']);
-            $this->setDesSenha($row['dessenha']);
-            $this->setDtCadastro(new DateTime($row['dtcadastro']));
+            $this->getData($results[0]);
         }
     }
-
-        public function __toString() {
-            return json_encode(array(
-                "idusuario"=>$this->getIdUsuario(),
-                "desemail"=>$this->getDesEmail(),
-                "deslogin"=>$this->getDesLogin(),
-                "dessenha"=>$this->getDesSenha()
-            ));
-        }
 
         public static function getList() {
             $sql = new Sql();
@@ -135,16 +121,28 @@ class User {
             ));
 
             if (count($results) > 0) {
-                $row = $results[0];
-                $this->setIdUsuario($row['idusuario']);
-                $this->setDesEmail($row['desemail']);
-                $this->setDesLogin($row['deslogin']);
-                $this->setDesSenha($row['dessenha']);
-                $this->setDtCadastro(new DateTime($row['dtcadastro']));
+                $this->getData($results[0]);
             } else {
                 echo "User or Password incorrect";
             }
         }
+
+        public function getData($data) {
+            $this->setIdUsuario($data['idusuario']);
+            $this->setDesEmail($data['desemail']);
+            $this->setDesLogin($data['deslogin']);
+            $this->setDesSenha($data['dessenha']);
+            $this->setDtCadastro(new DateTime($data['dtcadastro']));
+        }
+
+    public function __toString() {
+        return json_encode(array(
+            "idusuario"=>$this->getIdUsuario(),
+            "desemail"=>$this->getDesEmail(),
+            "deslogin"=>$this->getDesLogin(),
+            "dessenha"=>$this->getDesSenha()
+        ));
+    }
 
 }
 ?>
